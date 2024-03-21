@@ -37,9 +37,9 @@ func main() {
 	for i := 0; i < 10; i++ {
 		ok, _ := fc.Check(context.Background(), userID)
 		if ok {
-			fmt.Printf("Request for user: %d passed", userID)
+			fmt.Printf("Request for user: %d passed\n", userID)
 		} else {
-			fmt.Printf("Request for user: %d rejected", userID)
+			fmt.Printf("Request for user: %d rejected\n", userID)
 		}
 		time.Sleep(time.Second) // Имитация запросов с интервалом в 1 секунду
 	}
