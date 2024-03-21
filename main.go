@@ -18,7 +18,6 @@ func main() {
 		panic(err)
 	}
 
-	// Получаем значения из конфигурации
 	host := viper.GetString("redis.host")
 	password := viper.GetString("redis.password")
 	count := viper.GetInt("redis.countOfDataBase")
@@ -29,8 +28,12 @@ func main() {
 		DB:       count,
 	})
 
-	fc := flood_control.NewFloodControl(5*time.Second, 3, redisClient) // Проверка на флуд каждые 5 секунд, максимум 3 запроса
-	userID := int64(123)                                               // Идентификатор пользователя
+	n := viper.GetInt("flood_control.time_interval")
+	k := viper.GetInt("flood_control.max_requests")
+
+	duration := time.Duration(n) * time.Second
+	fc := flood_control.NewFloodControl(duration, k, redisClient)
+	userID := int64(123)
 	for i := 0; i < 10; i++ {
 		ok, _ := fc.Check(context.Background(), userID)
 		if ok {

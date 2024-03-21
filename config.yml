@@ -2,3 +2,7 @@ redis:
   host: "localhost:6379"
   password: ""
   countOfDataBase: ""
+
+flood_control:
+  time_interval: 5
+  max_requests: 3
