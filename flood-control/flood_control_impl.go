@@ -2,7 +2,6 @@ package flood_control
 
 import (
 	"context"
-	"fmt"
 	"github.com/redis/go-redis/v9"
 	"strconv"
 	"time"
@@ -10,8 +9,8 @@ import (
 
 // FloodControlImpl представляет реализацию интерфейса FloodControl.
 type FloodControlImpl struct {
-	period      time.Duration // Промежуток времени для флуд-контроля
-	limit       int           // Максимальное количество запросов в промежутке времени
+	period      time.Duration
+	limit       int
 	redisClient *redis.Client
 }
 
@@ -47,8 +46,6 @@ func (fc *FloodControlImpl) Check(ctx context.Context, userID int64) (bool, erro
 	if err != nil {
 		return false, err
 	}
-
-	fmt.Println(requestTimes)
 
 	// Проверяем количество запросов за последние N секунд
 	if len(requestTimes) >= fc.limit {
